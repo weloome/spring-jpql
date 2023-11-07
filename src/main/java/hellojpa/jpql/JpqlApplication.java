@@ -31,9 +31,8 @@ public class JpqlApplication {
             em.flush();
             em.clear();
 
-            String query = "select m from Member m inner join m.team t where t.name = :teamName";
+            String query = "select m from Member m left outer join m.team t";
             List<Member> result = em.createQuery(query, Member.class)
-                    .setParameter("teamName", "teamA")
                     .getResultList();
             System.out.println("result = " + result);
             
