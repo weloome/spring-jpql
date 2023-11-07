@@ -44,18 +44,12 @@ public class JpqlApplication {
             em.flush();
             em.clear();
 
-            String query = "select t from Team t";
-            List<Team> result = em.createQuery(query, Team.class)
-                    .setFirstResult(0)
-                    .setMaxResults(2)
-                    .getResultList();
-            System.out.println("result = " + result.size());
-
-            for (Team team : result) {
-                System.out.println("team = " + team.getName() + " | members = " + team.getMembers());
-                for (Member member : team.getMembers()) {
-                    System.out.println("-> member = " + member);
-                }
+            List<Member> resultList = em.createNamedQuery("Member.findByUsername", Member.class)
+                            .setParameter("username", "회원1")
+                                    .getResultList();
+            
+            for (Member member : resultList) {
+                System.out.println("member = " + member);
             }
 
             tx.commit();
