@@ -32,11 +32,12 @@ public class JpqlApplication {
             em.clear();
 
             String query = "select " +
-                                "case when m.age <= 10 then '학생요금'" +
-                                "     when m.age >= 60 then '경로요금'" +
-                                "     else '일반요금' " +
+                                "case t.name " +
+                                    "when 'teamA' then '인센티브110%'" +
+                                    "when 'teamB' then '인센티브120%'" +
+                                    "     else '인센티브105%' " +
                                 "end " + 
-                            " from Member m";
+                            " from Team t";
             List<String> result = em.createQuery(query, String.class).getResultList();
             
             for (String s : result) {
