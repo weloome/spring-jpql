@@ -23,7 +23,7 @@ public class JpqlApplication {
             em.persist(team);
 
             Member member = new Member();
-            member.setUsername("member1");
+            member.setUsername(null);
             member.setAge(10);
             member.setTeam(team);
             em.persist(member);
@@ -31,13 +31,7 @@ public class JpqlApplication {
             em.flush();
             em.clear();
 
-            String query = "select " +
-                                "case t.name " +
-                                    "when 'teamA' then '인센티브110%'" +
-                                    "when 'teamB' then '인센티브120%'" +
-                                    "     else '인센티브105%' " +
-                                "end " + 
-                            " from Team t";
+            String query = "select coalesce(m.username, '이름 없는 회원') from Member m";
             List<String> result = em.createQuery(query, String.class).getResultList();
             
             for (String s : result) {
