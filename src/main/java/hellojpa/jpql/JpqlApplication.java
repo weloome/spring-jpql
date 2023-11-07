@@ -31,7 +31,7 @@ public class JpqlApplication {
             em.flush();
             em.clear();
 
-            String query = "select m from Member m left outer join m.team t";
+            String query = "select m from Member m, Team t where m.username = t.name";
             List<Member> result = em.createQuery(query, Member.class)
                     .getResultList();
             System.out.println("result = " + result);
