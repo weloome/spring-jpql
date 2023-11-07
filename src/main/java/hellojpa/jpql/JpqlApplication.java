@@ -44,13 +44,14 @@ public class JpqlApplication {
             em.flush();
             em.clear();
 
-            String query = "select m from Member m join fetch m.team";
-            List<Member> result = em.createQuery(query, Member.class).getResultList();
-            
-            for (Member member : result) {
-                System.out.println("member = " + member.getUsername() + " , " + member.getTeam().getName());
+            String query = "select t from Team t join fetch t.members";
+            List<Team> result = em.createQuery(query, Team.class).getResultList();
+            for (Team team : result) {
+                System.out.println("team = " + team.getName() + " | " + team);
+                for (Member member : team.getMembers()) {
+                    System.out.println("-> username = " + member.getUsername() + ", member = " + member);
+                }
             }
-            
 
             tx.commit();
         } catch (Exception e) {
